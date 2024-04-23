@@ -59,3 +59,62 @@ def student_api(request):
         stu.delete()
         return JsonResponse({'msg':'data deleted'})
         
+
+# class based views
+
+# from django.http import JsonResponse
+# from rest_framework.views import APIView
+# from rest_framework.parsers import JSONParser
+# from rest_framework import status
+# from .models import Student
+# from .serializers import StudentSerializer
+# from rest_framework.permissions import AllowAny
+# from django.views.decorators.csrf import csrf_exempt
+# from django.utils.decorators import method_decorator
+
+# @method_decorator(csrf_exempt, name='dispatch')
+# class StudentAPIView(APIView):
+#     permission_classes = [AllowAny]
+
+#     def get(self, request, *args, **kwargs):
+#         id = request.GET.get('id')
+#         if id is not None:
+#             try:
+#                 stu = Student.objects.get(id=id)
+#                 serializer = StudentSerializer(stu)
+#                 return JsonResponse(serializer.data)
+#             except Student.DoesNotExist:
+#                 return JsonResponse({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+
+#         # If 'id' is not provided, retrieve all students
+#         stu = Student.objects.all()
+#         serializer = StudentSerializer(stu, many=True)
+#         return JsonResponse(serializer.data, safe=False)
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = StudentSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return JsonResponse({'msg': "created successfully!"}, status=status.HTTP_201_CREATED)
+#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#     def put(self, request, *args, **kwargs):
+#         id = request.data.get('id')
+#         try:
+#             stu = Student.objects.get(id=id)
+#             serializer = StudentSerializer(stu, data=request.data, partial=True)
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 return JsonResponse({'msg': 'Updated successfully!!'})
+#             return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         except Student.DoesNotExist:
+#             return JsonResponse({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
+
+#     def delete(self, request, *args, **kwargs):
+#         id = request.data.get('id')
+#         try:
+#             stu = Student.objects.get(id=id)
+#             stu.delete()
+#             return JsonResponse({'msg': 'Data deleted'})
+#         except Student.DoesNotExist:
+#             return JsonResponse({'error': 'Student not found'}, status=status.HTTP_404_NOT_FOUND)
